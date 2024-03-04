@@ -11,8 +11,10 @@ load_dotenv()
 
 # Function to get the weather information using the OpenWeatherMap API
 def get_weather(user_city):
+    #irish country code
+    country_code = "IE"
     api_key = os.getenv("WEATHER_APP_KEY")
-    weather_request = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q={user_city}&units=metric&appid={api_key}")
+    weather_request = requests.get(f"http://api.openweathermap.org/data/2.5/weather?q={user_city},{country_code}&units=metric&appid={api_key}")
 
     # If the city is not found
     if weather_request.status_code == 404:
@@ -20,6 +22,7 @@ def get_weather(user_city):
         return None
     #parse the json response
     weather_data = weather_request.json()
+    
     icon_id = weather_data['weather'][0]['icon']
     temperature = weather_data['main']['temp']
     description = weather_data['weather'][0]['description']
@@ -51,7 +54,7 @@ def search():
     desc_label.configure(text=f"Description: {description}")
 
 
-root = ttkbootstrap.Window(themename="morph")
+root = ttkbootstrap.Window(themename="flatly")
 root.title("Weather App")
 root.geometry("400x400")
 

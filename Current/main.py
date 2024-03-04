@@ -13,8 +13,9 @@ weather_request = requests.get(f"http://api.openweathermap.org/data/2.5/weather?
 weather_data = weather_request.json()['weather'][0]['main']
 weather_temp = weather_request.json()['main']['temp']
 
-# turns "clouds" into "Cloudy" for better readability
-if weather_data == "Clouds":
-    weather_data = "Cloudy"
+
+#replace s with y to make it more readable
+if weather_data[-1] == "s":
+    weather_data = weather_data[:-1] + "y"
 
 print(f"The weather in {user_city} is {weather_data} with a temperature of {weather_temp}C")
